@@ -10,8 +10,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +23,13 @@ import java.util.List;
 
 @Tag(name = "TourAPI 컨트롤러")
 @RestController
+@Slf4j
 public class TourRestAPIController {
     @Qualifier("tourAPIServiceImpl")
     public final TourAPIService tourAPIService;
+
+    @Value("${api.key}")
+    String apiKey;
 
     public TourRestAPIController(TourAPIService tourAPIService) {
         this.tourAPIService = tourAPIService;
@@ -48,9 +54,8 @@ public class TourRestAPIController {
             @RequestParam String keyword,
             @RequestParam String pageNo
     ) {
-        String key = "gIY262VtYdeHjkVj0LjSSFlkA56X/H2B/WviOklAVEu6MHcP2YY1MO/sj4K30CfAmMCh/xeo7DCl8iyIQj3D6g==";
 
-        List<TourAPIDTO> tourAPIDTOS = tourAPIService.keywordSearchApi(key, keyword, pageNo);
+        List<TourAPIDTO> tourAPIDTOS = tourAPIService.keywordSearchApi(apiKey, keyword, pageNo);
 
         return tourAPIDTOS;
     }
@@ -74,9 +79,8 @@ public class TourRestAPIController {
             @RequestParam String areaCode,
             @RequestParam String pageNo
     ) {
-        String key = "gIY262VtYdeHjkVj0LjSSFlkA56X/H2B/WviOklAVEu6MHcP2YY1MO/sj4K30CfAmMCh/xeo7DCl8iyIQj3D6g==";
 
-        List<TourAPIDTO> tourAPIDTOS = tourAPIService.areaBasedSearchApi(key, areaCode, pageNo);
+        List<TourAPIDTO> tourAPIDTOS = tourAPIService.areaBasedSearchApi(apiKey, areaCode, pageNo);
 
         return tourAPIDTOS;
     }

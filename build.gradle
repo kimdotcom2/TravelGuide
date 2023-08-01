@@ -33,6 +33,7 @@ dependencies {
 	implementation 'org.json:json:20230227'
 	implementation 'io.springfox:springfox-boot-starter'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 tasks.named('test') {
