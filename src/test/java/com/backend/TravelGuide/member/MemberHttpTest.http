@@ -1,0 +1,52 @@
+### 회원가입
+POST http://localhost:8080/member/join
+Content-Type: application/json
+
+{
+  "email" : "user@email.com",
+  "password" : "11111111",
+  "name" : "user1",
+  "answers" : [
+    "answer1",
+    "answer2",
+    "answer3"
+  ]
+}
+
+### 사용자 정보 조회
+GET http://localhost:8080/member/info
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGVtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2OTEzMDcxNTYsImV4cCI6MTY5MTMxMDc1Nn0.yPrjbtNq5eVVI1rKzlgYI6K65x6LHzdLtwOdQuvH2SSO1z3Hly-y1u2oeBeE-Yt2xvxORRaxqNCDKaZfYQHnmA
+
+### 사용자 정보 업데이트
+PUT http://localhost:8080/member/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGVtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2OTEzMDcxNTYsImV4cCI6MTY5MTMxMDc1Nn0.yPrjbtNq5eVVI1rKzlgYI6K65x6LHzdLtwOdQuvH2SSO1z3Hly-y1u2oeBeE-Yt2xvxORRaxqNCDKaZfYQHnmA
+
+{
+  "name": "modified user"
+}
+
+### 비밀번호 초기화 질문에 대한 대답 조회
+GET http://localhost:8080/member/password_answers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGVtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2OTEzMDcxNTYsImV4cCI6MTY5MTMxMDc1Nn0.yPrjbtNq5eVVI1rKzlgYI6K65x6LHzdLtwOdQuvH2SSO1z3Hly-y1u2oeBeE-Yt2xvxORRaxqNCDKaZfYQHnmA
+
+### 비밀번호 초기화
+PUT http://localhost:8080/member/password_reset
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGVtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2OTEzMDcxNTYsImV4cCI6MTY5MTMxMDc1Nn0.yPrjbtNq5eVVI1rKzlgYI6K65x6LHzdLtwOdQuvH2SSO1z3Hly-y1u2oeBeE-Yt2xvxORRaxqNCDKaZfYQHnmA
+
+{
+  "oldPassword" : "11111111",
+  "newPassword" : "22222222"
+}
+
+### 회원탈퇴
+DELETE http://localhost:8080/member/withdraw
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGVtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2OTEzMDcxNTYsImV4cCI6MTY5MTMxMDc1Nn0.yPrjbtNq5eVVI1rKzlgYI6K65x6LHzdLtwOdQuvH2SSO1z3Hly-y1u2oeBeE-Yt2xvxORRaxqNCDKaZfYQHnmA
+
+{
+  "password": "22222222"
+}
