@@ -1,0 +1,17 @@
+### 카카오 로그인
+POST http://localhost:8080/login/kakao
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "nickname": "user"
+}
+
+### 일반 로그인
+POST http://localhost:8080/login/normal
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "11111111"
+}
