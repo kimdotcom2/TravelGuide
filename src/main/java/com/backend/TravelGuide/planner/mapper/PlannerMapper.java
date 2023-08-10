@@ -24,6 +24,6 @@ public interface PlannerMapper {
                     @Mapping(target = "schedule", source = "scheduleDTO")
             }
     )
-    public PlannerResponseDTO plannerDTOToResponse(PlannerDTO plannerDTO);
+    public PlannerResponseDTO.PlannerResponse plannerDTOToResponse(PlannerDTO plannerDTO);
 
 }

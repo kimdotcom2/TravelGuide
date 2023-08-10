@@ -4,28 +4,43 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class PlannerResponseDTO {
 
-    private Long plannerId;
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PlannerResponse {
 
-    private String email;
+        private Long plannerId;
 
-    private String title;
+        private String email;
 
-    private Date firstDate;
+        private String title;
 
-    private Date lastDate;
+        private Date firstDate;
 
-    private String comment;
+        private Date lastDate;
 
-    List<ScheduleDTO> schedule;
+        private String comment;
 
+        List<ScheduleDTO> schedule;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PlannerResponseFullDTO {
+        List<PlannerResponseDTO> plannerResponseDTOList = new ArrayList<>();
+
+        int count = 0;
+
+        int currentPage = 0;
+    }
 
 
 }
