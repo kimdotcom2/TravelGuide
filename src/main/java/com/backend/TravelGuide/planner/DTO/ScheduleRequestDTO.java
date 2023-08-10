@@ -16,18 +16,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ScheduleRequestDTO {
 
+    @NotBlank
     private Long contentId;
 
+    @NotBlank
     private Long contentType;
 
+    @NotBlank
     private String address;
 
+    @NotBlank
     private String place;
 
+    @NotBlank
     private Long mapX;
 
+    @NotBlank
     private Long mapY;
 
+    @NotBlank
     private Date date;
 
     private LocalDateTime arriveTime;

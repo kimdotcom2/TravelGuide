@@ -64,4 +64,7 @@ public class Schedule {
     @Column(name = "thumbnail_location")
     private String thumbnailLocation;
 
+    @Version
+    private Long version;
+
 }

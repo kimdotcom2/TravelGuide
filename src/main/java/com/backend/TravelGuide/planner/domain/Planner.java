@@ -38,5 +38,8 @@ public class Planner extends BaseEntity{
     @Nullable
     private String comment;
 
+    @Version
+    private Long version;
+
 
 }
