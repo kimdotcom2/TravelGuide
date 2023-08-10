@@ -2,6 +2,7 @@ package com.backend.TravelGuide.planner.service.serviceImpl;
 
 import com.backend.TravelGuide.planner.DTO.PlannerDTO;
 import com.backend.TravelGuide.planner.DTO.PlannerRequestDTO;
+import com.backend.TravelGuide.planner.DTO.PlannerResponseDTO;
 import com.backend.TravelGuide.planner.DTO.ScheduleDTO;
 import com.backend.TravelGuide.planner.domain.Planner;
 import com.backend.TravelGuide.planner.domain.Schedule;
@@ -122,6 +123,9 @@ class CrudPlannerServiceImplTest {
     @Autowired
     ScheduleMapper scheduleMapper;
 
+    @Autowired
+    CrudPlannerServiceImpl crudPlannerService;
+
     @Test
     @DisplayName("insert planner test")
     void insertPlannerFull() throws JsonProcessingException {
@@ -153,5 +157,21 @@ class CrudPlannerServiceImplTest {
         scheduleList.stream().forEach(s -> System.out.println(s.toString()));
 
 
+    }
+
+    @Test
+    @DisplayName("select planner by email test")
+    void findPlannerByEmail() {
+        List<PlannerDTO> plannerDTOList = crudPlannerService.findMyPlannerByEmail(email);
+
+        List<PlannerResponseDTO> plannerResponseDTOList = new ArrayList<>();
+
+        plannerDTOList.stream().forEach(s -> {
+            plannerResponseDTOList.add(plannerMapper.plannerDTOToResponse(s));
+        });
+
+        //plannerDTOList.stream().forEach(s -> System.out.println(s.toString()));
+
+        plannerResponseDTOList.stream().forEach(s -> System.out.println(s.toString()));
     }
 }

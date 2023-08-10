@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Planner")
@@ -40,6 +42,10 @@ public class Planner extends BaseEntity{
 
     @Version
     private Long version;
+
+    @OneToMany
+    @JoinColumn(name = "planner_id")
+    private List<Schedule> scheduleList = new ArrayList<>();
 
 
 }

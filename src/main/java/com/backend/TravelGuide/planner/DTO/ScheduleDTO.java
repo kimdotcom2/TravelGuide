@@ -15,6 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class ScheduleDTO {
 
+    private Long scheduleId;
+
     private Long plannerId;
 
     private Long contentId;

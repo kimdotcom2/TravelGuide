@@ -3,15 +3,14 @@ package com.backend.TravelGuide.planner.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class PlannerDTO {
+@AllArgsConstructor
+public class PlannerResponseDTO {
 
     private Long plannerId;
 
@@ -25,7 +24,6 @@ public class PlannerDTO {
 
     private String comment;
 
-    List<ScheduleRequestDTO> schedule;
+    List<ScheduleDTO> schedule;
 
-    List<ScheduleDTO> scheduleDTO;
 }

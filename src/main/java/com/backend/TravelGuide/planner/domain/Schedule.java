@@ -67,4 +67,8 @@ public class Schedule {
     @Version
     private Long version;
 
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "planner_id")
+    private Planner planner;*/
+
 }
