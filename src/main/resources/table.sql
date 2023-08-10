@@ -1,17 +1,12 @@
 CREATE TABLE `Member` (
 	`email`	VARCHAR(64)	NOT NULL,
 	`password`	VARCHAR(255)	NOT NULL,
-	`role`	INT	NOT NULL	COMMENT '0 : 관리자
-1 : 비회원
-2: 회원',
 	`name`	VARCHAR(32)	NOT NULL,
 	`nickname`	VARCHAR(32)	NOT NULL,
-	`question`	VARCHAR(255)	NOT NULL,
-	`answer`	VARCHAR(255)	NOT NULL,
 	`social_login` ENUM('Y', 'N')	NOT NULL
 );
 
-CREATE TABLE `Planner` (
+CREATE TABLE `planner` (
 	`planner_id`	INT	NOT NULL,
 	`email`	VARCHAR(64)	NOT NULL	COMMENT 'foreign key',
 	`title`	VARCHAR(64)	NOT NULL,
@@ -27,10 +22,10 @@ CREATE TABLE `schedule` (
 	`content_type`	INT	NOT NULL,
 	`address`	VARCHAR(255)	NOT NULL,
 	`place`	VARCHAR(32)	NOT NULL,
-	`mapx`	INT	NOT NULL,
-	`mapy`	INT	NOT NULL,
+	`mapx`	DOUBLE	NOT NULL,
+	`mapy`	DOUBLE	NOT NULL,
 	`date`	DATE	NOT NULL,
-	`arrive_time`	DATETIME	NOT NULL,
+	`arrive_time`	DATETIME	NULL,
 	`via_time`	TIME	NULL,
 	`start_time`	DATETIME	NULL,
 	`thumbnail_location`	VARCHAR(255)	NOT NULL
@@ -56,7 +51,7 @@ CREATE TABLE `comment` (
 	`date`	DATETIME	NOT NULL
 );
 
-CREATE TABLE `FIle` (
+CREATE TABLE `file` (
 	`file_id`	INT	NOT NULL,
 	`file_origin`	VARCHAR(64)	NOT NULL,
 	`file_internal`	VARCHAR(64)	NOT NULL,
@@ -68,7 +63,7 @@ ALTER TABLE `Member` ADD CONSTRAINT `PK_MEMBER` PRIMARY KEY (
 	`email`
 );
 
-ALTER TABLE `Planner` ADD CONSTRAINT `PK_PLANNER` PRIMARY KEY (
+ALTER TABLE `planner` ADD CONSTRAINT `PK_PLANNER` PRIMARY KEY (
 	`planner_id`
 );
 
@@ -84,11 +79,21 @@ ALTER TABLE `comment` ADD CONSTRAINT `PK_COMMENT` PRIMARY KEY (
 	`comment_id`
 );
 
-ALTER TABLE `FIle` ADD CONSTRAINT `PK_FILE` PRIMARY KEY (
+ALTER TABLE `file` ADD CONSTRAINT `PK_FILE` PRIMARY KEY (
 	`file_id`
 );
 
-ALTER TABLE `Planner` ADD FOREIGN KEY `Planner`(`email`) REFERENCES `Member`(`email`);
+ALTER TABLE Planner MODIFY planner_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE schedule MODIFY schedule_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE board MODIFY post_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE comment MODIFY comment_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE file MODIFY file_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `planner` ADD FOREIGN KEY `Planner`(`email`) REFERENCES `Member`(`email`);
 
 ALTER TABLE `schedule` ADD FOREIGN KEY `schedule`(`planner_id`) REFERENCES `Planner`(`planner_id`);
 
@@ -97,3 +102,4 @@ ALTER TABLE `board` ADD FOREIGN KEY `board`(`email`) REFERENCES `Member`(`email`
 ALTER TABLE `comment` ADD FOREIGN KEY `comment`(`post_id`) REFERENCES `board`(`post_id`);
 
 ALTER TABLE `comment` ADD FOREIGN KEY `comment2`(`email`) REFERENCES `Member`(`email`);
+

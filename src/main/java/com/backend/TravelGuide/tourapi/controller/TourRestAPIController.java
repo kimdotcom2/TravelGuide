@@ -88,14 +88,14 @@ public class TourRestAPIController {
     @ExceptionHandler({MissingServletRequestParameterException.class, HttpServerErrorException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public String handleMissingServletRequestParameterException() {
-        System.out.println("예외 발생!\nMissingServletRequestParameterException");
+        log.info("예외 발생!\nMissingServletRequestParameterException");
         return "Bad Request";
     }
 
     @ExceptionHandler(JSONException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleJsonException() {
-        System.out.println("예외 발생!\nJSONException");
+        log.info("예외 발생!\nJSONException");
         return "Server Error";
     }
 }

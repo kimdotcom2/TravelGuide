@@ -1,0 +1,19 @@
+package com.backend.TravelGuide.planner.mapper;
+
+import com.backend.TravelGuide.planner.DTO.PlannerDTO;
+import com.backend.TravelGuide.planner.DTO.PlannerRequestDTO;
+import com.backend.TravelGuide.planner.domain.Planner;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface PlannerMapper {
+
+    public Planner plannerDTOToEntity(PlannerDTO plannerDTO);
+
+    public PlannerDTO entityToPlannerDTO(Planner planner);
+
+    public PlannerDTO requestToPlannerDTO(PlannerRequestDTO plannerRequestDTO);
+
+    public Planner requestToEntity(PlannerRequestDTO plannerRequestDTO);
+
+}
