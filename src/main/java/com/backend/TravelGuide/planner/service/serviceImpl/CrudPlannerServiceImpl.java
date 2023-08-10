@@ -10,6 +10,9 @@ import com.backend.TravelGuide.planner.repository.PlannerRepository;
 import com.backend.TravelGuide.planner.repository.ScheduleRepository;
 import com.backend.TravelGuide.planner.service.CrudPlannerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,14 +59,47 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
     }
 
     @Override
-    public List<PlannerDTO> findMyPlannerByEmail(String email) {
+    public List<PlannerDTO> findMyPlannerByEmail(String email, int paging, int pageNum) {
 
-        List<Planner> plannerList = plannerRepository.findByEmail(email);
+        Pageable pageable = PageRequest.of(pageNum, paging);
+
+        Page<Planner> plannerList = plannerRepository.findByEmail(email, pageable);
         List<PlannerDTO> plannerDTOList = new ArrayList<>();
 
-        for (int i = 0; i < plannerList.size(); i++) {
+        for (int i = 0; i < plannerList.getSize(); i++) {
 
-            PlannerDTO plannerDTOTemp = plannerMapper.entityToPlannerDTO(plannerList.get(i));
+            PlannerDTO plannerDTOTemp = plannerMapper.entityToPlannerDTO(plannerList.toList().get(i));
+
+            log.info("planner id : " + plannerDTOTemp.getPlannerId().toString());
+
+            List<Schedule> scheduleList = scheduleRepository.findByPlannerId(plannerDTOTemp.getPlannerId());
+
+            List<ScheduleDTO> scheduleDTOList = new ArrayList<>();
+
+            scheduleList.stream().forEach(s -> {
+                scheduleDTOList.add(scheduleMapper.entityToScheduleDTO(s));
+            });
+
+            plannerDTOTemp.setScheduleDTO(scheduleDTOList);
+
+            plannerDTOList.add(plannerDTOTemp);
+
+        }
+
+        return plannerDTOList;
+    }
+
+    @Override
+    public List<PlannerDTO> findAllPlanner(int paging, int pageNum) {
+
+        Pageable pageable = PageRequest.of(pageNum, paging);
+
+        Page<Planner> plannerList = plannerRepository.findAll(pageable);
+        List<PlannerDTO> plannerDTOList = new ArrayList<>();
+
+        for (int i = 0; i < plannerList.getSize(); i++) {
+
+            PlannerDTO plannerDTOTemp = plannerMapper.entityToPlannerDTO(plannerList.toList().get(i));
 
             log.info("planner id : " + plannerDTOTemp.getPlannerId().toString());
 

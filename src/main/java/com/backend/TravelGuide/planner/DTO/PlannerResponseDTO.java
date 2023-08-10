@@ -26,4 +26,6 @@ public class PlannerResponseDTO {
 
     List<ScheduleDTO> schedule;
 
+
+
 }

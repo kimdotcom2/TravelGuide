@@ -162,7 +162,7 @@ class CrudPlannerServiceImplTest {
     @Test
     @DisplayName("select planner by email test")
     void findPlannerByEmail() {
-        List<PlannerDTO> plannerDTOList = crudPlannerService.findMyPlannerByEmail(email);
+        List<PlannerDTO> plannerDTOList = crudPlannerService.findMyPlannerByEmail(email, 1, 0);
 
         List<PlannerResponseDTO> plannerResponseDTOList = new ArrayList<>();
 

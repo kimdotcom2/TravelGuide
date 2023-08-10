@@ -1,16 +1,20 @@
 package com.backend.TravelGuide.planner.repository;
 
 import com.backend.TravelGuide.planner.domain.Planner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface PlannerRepository extends JpaRepository<Planner, Long> {
 
-    List<Planner> findByEmail(String email);
+    Page<Planner> findByEmail(String email, Pageable pageable);
 
-    List<Planner> findAll();
+    Page<Planner> findAll(Pageable pageable);
 
-    
+    Long countByEmail(String email);
+
+    Long countBy();
 
 }
