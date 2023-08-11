@@ -17,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +135,7 @@ class CrudPlannerServiceImplTest {
 
         ObjectMapper objectMapper = new ObjectMapper().registerModules(new JavaTimeModule());
 
-        PlannerRequestDTO plannerRequestDTO = objectMapper.readValue(jsonSample, PlannerRequestDTO.class);
+        PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO = objectMapper.readValue(jsonSample, PlannerRequestDTO.PlannerWriteRequestDTO.class);
 
         PlannerDTO plannerDTO = plannerMapper.requestToPlannerDTO(plannerRequestDTO);
 
@@ -173,5 +174,18 @@ class CrudPlannerServiceImplTest {
         //plannerDTOList.stream().forEach(s -> System.out.println(s.toString()));
 
         plannerResponseDTOList.stream().forEach(s -> System.out.println(s.toString()));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("delete planner")
+    void findPlannerByPlannerId() {
+        PlannerDTO plannerDTO = new PlannerDTO();
+        Long id = Long.valueOf(2);
+        //plannerDTO.setPlannerId(id);
+
+        //email = "false@email.net";
+
+        crudPlannerService.deletePlanner(email, id);
     }
 }

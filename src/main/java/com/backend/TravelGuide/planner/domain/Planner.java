@@ -43,7 +43,7 @@ public class Planner extends BaseEntity{
     @Version
     private Long version;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "planner_id")
     private List<Schedule> scheduleList = new ArrayList<>();
 

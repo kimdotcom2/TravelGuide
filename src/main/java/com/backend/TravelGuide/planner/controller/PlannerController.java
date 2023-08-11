@@ -30,7 +30,7 @@ public class PlannerController {
 
     @PostMapping(value = "/planner/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addPlanner(
-            @RequestBody PlannerRequestDTO plannerRequestDTO,
+            @RequestBody PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO,
             Authentication authentication
             ) {
 

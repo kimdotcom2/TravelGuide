@@ -15,9 +15,11 @@ public interface PlannerMapper {
 
     public PlannerDTO entityToPlannerDTO(Planner planner);
 
-    public PlannerDTO requestToPlannerDTO(PlannerRequestDTO plannerRequestDTO);
+    public PlannerDTO requestToPlannerDTO(PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO);
 
-    public Planner requestToEntity(PlannerRequestDTO plannerRequestDTO);
+    public Planner requestToEntity(PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO);
+
+    public PlannerDTO deleteRequestToPlannerDTO(PlannerRequestDTO.PlannerDeleteRequestDTO plannerDeleteRequestDTO);
 
     @Mappings(
             {

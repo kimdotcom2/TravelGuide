@@ -1,5 +1,8 @@
 package com.backend.TravelGuide.planner.service.serviceImpl;
 
+import com.backend.TravelGuide.member.domain.Member;
+import com.backend.TravelGuide.member.domain.Role;
+import com.backend.TravelGuide.member.repository.MemberRepository;
 import com.backend.TravelGuide.planner.DTO.PlannerDTO;
 import com.backend.TravelGuide.planner.DTO.ScheduleDTO;
 import com.backend.TravelGuide.planner.domain.Planner;
@@ -13,11 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -32,11 +38,14 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public CrudPlannerServiceImpl(PlannerMapper plannerMapper, ScheduleMapper scheduleMapper, PlannerRepository plannerRepository, ScheduleRepository scheduleRepository) {
+    private final MemberRepository memberRepository;
+
+    public CrudPlannerServiceImpl(PlannerMapper plannerMapper, ScheduleMapper scheduleMapper, PlannerRepository plannerRepository, ScheduleRepository scheduleRepository, MemberRepository memberRepository) {
         this.plannerMapper = plannerMapper;
         this.scheduleMapper = scheduleMapper;
         this.plannerRepository = plannerRepository;
         this.scheduleRepository = scheduleRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -58,6 +67,7 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
     }
 
+    @Transactional
     @Override
     public List<PlannerDTO> findMyPlannerByEmail(String email, int paging, int pageNum) {
 
@@ -89,6 +99,7 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
         return plannerDTOList;
     }
 
+    @Transactional
     @Override
     public List<PlannerDTO> findAllPlanner(int paging, int pageNum) {
 
@@ -118,5 +129,54 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
         }
 
         return plannerDTOList;
+    }
+
+    @Transactional
+    @Override
+    public void deletePlanner(String email, Long plannerId) {
+
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        boolean isAdmin = false;
+
+        if (member.isPresent() && member.get().getRole() == Role.ADMIN) {
+            isAdmin = true;
+        }
+        else if (!member.isPresent()) {
+
+            log.info("No such user!");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<Planner> planner = plannerRepository.findByPlannerId(plannerId);
+
+        //log.info(planner.get().getPlannerId() + " is planner id");
+
+        if (planner.isPresent() && planner.get().getEmail().equals(email)) {
+
+            //scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            plannerRepository.deleteByPlannerId(planner.get().getPlannerId());
+
+            log.info("<< delete id : " + planner.get().getPlannerId() + " planner >>");
+
+        }
+        else if (planner.isPresent() && isAdmin == true && !planner.get().getEmail().equals(email)) {
+            //scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            plannerRepository.deleteByPlannerId(planner.get().getPlannerId());
+
+            log.info("<< delete id : " + planner.get().getPlannerId() + " planner by Admin>>");
+        }
+        else if (planner.isPresent() && !planner.get().getEmail().equals(email)) {
+            log.info("Invalid delete request");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+        else if (!planner.isPresent()) {
+            log.info("No such an planner");
+
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        }
+
     }
 }

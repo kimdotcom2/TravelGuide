@@ -13,4 +13,6 @@ public interface CrudPlannerService {
 
     List<PlannerDTO> findAllPlanner(int paging, int pageNum);
 
+    void deletePlanner(String email, Long plannerId);
+
 }
