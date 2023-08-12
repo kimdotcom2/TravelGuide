@@ -7,6 +7,9 @@ import com.backend.TravelGuide.planner.DTO.PlannerDTO;
 import com.backend.TravelGuide.planner.DTO.ScheduleDTO;
 import com.backend.TravelGuide.planner.domain.Planner;
 import com.backend.TravelGuide.planner.domain.Schedule;
+import com.backend.TravelGuide.planner.error.exception.InvalidRequestException;
+import com.backend.TravelGuide.planner.error.exception.NoAuthorityException;
+import com.backend.TravelGuide.planner.error.exception.NoSuchPlannerException;
 import com.backend.TravelGuide.planner.mapper.PlannerMapper;
 import com.backend.TravelGuide.planner.mapper.ScheduleMapper;
 import com.backend.TravelGuide.planner.repository.PlannerRepository;
@@ -78,7 +81,7 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
             log.info("No such user!");
 
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new InvalidRequestException();
         }
 
         Pageable pageable = PageRequest.of(pageNum, paging);
@@ -127,10 +130,10 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
             log.info("No such user!");
 
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new InvalidRequestException();
         }
         else {
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new NoAuthorityException();
         }
 
         Pageable pageable = PageRequest.of(pageNum, paging);
@@ -176,7 +179,7 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
             log.info("No such user!");
 
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new InvalidRequestException();
         }
 
         Optional<Planner> planner = plannerRepository.findByPlannerId(plannerId);
@@ -200,12 +203,12 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
         else if (planner.isPresent() && !planner.get().getEmail().equals(email) && isAdmin == false) {
             log.info("Invalid delete request");
 
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new InvalidRequestException();
         }
         else if (!planner.isPresent()) {
             log.info("No such an planner");
 
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+            throw new NoSuchPlannerException();
         }
 
     }
@@ -268,12 +271,12 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
         else if (planner.isPresent() && !planner.get().getEmail().equals(email) && isAdmin == false) {
             log.info("Invalid delete request");
 
-            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+            throw new InvalidRequestException();
         }
         else if (!planner.isPresent()) {
             log.info("No such an planner");
 
-            throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+            throw new InvalidRequestException();
         }
 
     }
