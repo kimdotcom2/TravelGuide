@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class ScheduleRequestDTO {
     private Long mapY;
 
     @NotBlank
-    private Date date;
+    private LocalDate date;
 
     private LocalDateTime arriveTime;
 

@@ -188,4 +188,23 @@ class CrudPlannerServiceImplTest {
 
         crudPlannerService.deletePlanner(email, id);
     }
+
+    @Test
+    @Transactional
+    @DisplayName("update planner")
+    void updatePlanner() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper().registerModules(new JavaTimeModule());
+
+        PlannerRequestDTO.PlannerUpdateRequestDTO plannerRequestDTO = objectMapper.readValue(jsonSample, PlannerRequestDTO.PlannerUpdateRequestDTO.class);
+
+        plannerRequestDTO.setPlannerId(2L);
+
+        plannerRequestDTO.setTitle("서울 여행 수정");
+
+        PlannerDTO plannerDTO = plannerMapper.updateRequestToPlannerDTO(plannerRequestDTO);
+
+        plannerDTO.setEmail("email");
+
+        crudPlannerService.updatePlannerFull("드먀", plannerDTO);
+    }
 }

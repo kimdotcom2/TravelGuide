@@ -179,4 +179,51 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
         }
 
     }
+
+    @Override
+    @Transactional
+    public void updatePlannerFull(String email, PlannerDTO plannerDTO) {
+
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        boolean isAdmin = false;
+
+        if (member.isPresent() && member.get().getRole() == Role.ADMIN) {
+            isAdmin = true;
+        }
+        else if (!member.isPresent()) {
+
+            log.info("No such user!");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<Planner> planner = plannerRepository.findByPlannerId(plannerDTO.getPlannerId());
+
+        if (planner.isPresent() && planner.get().getEmail().equals(email)) {
+
+            scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            insertPlannerFull(plannerDTO);
+
+            log.info("<< update id : " + planner.get().getPlannerId() + " planner >>");
+
+        }
+        else if (planner.isPresent() && isAdmin == true && !planner.get().getEmail().equals(email)) {
+            scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            insertPlannerFull(plannerDTO);
+
+            log.info("<< update id : " + planner.get().getPlannerId() + " planner by Admin>>");
+        }
+        else if (planner.isPresent() && !planner.get().getEmail().equals(email)) {
+            log.info("Invalid delete request");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+        else if (!planner.isPresent()) {
+            log.info("No such an planner");
+
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        }
+
+    }
 }

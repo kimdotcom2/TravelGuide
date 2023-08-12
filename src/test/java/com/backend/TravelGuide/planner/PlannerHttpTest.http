@@ -1,3 +1,7 @@
+### 플래너 작성
+POST http://localhost:8080/planner/add
+Content-Type: application/json
+
 {
     "title" : "서울 여행",
     "firstDate" : "2023-07-21",
@@ -86,5 +90,15 @@
     ]
 }
 
+
+## 내 플래너 조회
+GET http://localhost:8080/view/planner/my_planner
+
+{
+    paging : 2
+    pageNum : 1
+}
+
+http://localhost:8080/view/planner/my_planner?paging=2&pageNum=1
 
 

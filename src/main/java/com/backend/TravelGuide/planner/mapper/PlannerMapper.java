@@ -15,11 +15,16 @@ public interface PlannerMapper {
 
     public PlannerDTO entityToPlannerDTO(Planner planner);
 
+    @Mappings(
+            {
+                    @Mapping(target = "firstDate", source = "firstDate")
+            }
+    )
     public PlannerDTO requestToPlannerDTO(PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO);
 
     public Planner requestToEntity(PlannerRequestDTO.PlannerWriteRequestDTO plannerRequestDTO);
 
-    public PlannerDTO deleteRequestToPlannerDTO(PlannerRequestDTO.PlannerDeleteRequestDTO plannerDeleteRequestDTO);
+    //public PlannerDTO deleteRequestToPlannerDTO(PlannerRequestDTO.PlannerDeleteRequestDTO plannerDeleteRequestDTO);
 
     @Mappings(
             {
@@ -27,5 +32,7 @@ public interface PlannerMapper {
             }
     )
     public PlannerResponseDTO.PlannerResponse plannerDTOToResponse(PlannerDTO plannerDTO);
+
+    public PlannerDTO updateRequestToPlannerDTO(PlannerRequestDTO.PlannerUpdateRequestDTO plannerUpdateRequestDTO);
 
 }

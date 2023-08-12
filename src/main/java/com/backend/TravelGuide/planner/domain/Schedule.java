@@ -8,6 +8,7 @@ import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class Schedule {
     private Long mapY;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "arrive_time")
     @Nullable

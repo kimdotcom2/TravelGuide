@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,10 +32,10 @@ public class Planner extends BaseEntity{
     private String title;
 
     @Column(name = "first_date")
-    private Date firstDate;
+    private LocalDate firstDate;
 
     @Column(name = "last_date")
-    private Date lastDate;
+    private LocalDate lastDate;
 
     @Column(name = "comment")
     @Nullable

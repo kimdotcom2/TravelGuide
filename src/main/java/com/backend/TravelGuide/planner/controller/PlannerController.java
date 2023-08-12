@@ -2,6 +2,7 @@ package com.backend.TravelGuide.planner.controller;
 
 import com.backend.TravelGuide.planner.DTO.PlannerDTO;
 import com.backend.TravelGuide.planner.DTO.PlannerRequestDTO;
+import com.backend.TravelGuide.planner.DTO.PlannerResponseDTO;
 import com.backend.TravelGuide.planner.mapper.PlannerMapper;
 import com.backend.TravelGuide.planner.service.CrudPlannerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Tag(name = "플래너&스케줄 컨트롤러")
 @Slf4j
@@ -45,6 +46,29 @@ public class PlannerController {
         crudPlannerService.insertPlannerFull(plannerDTO);
 
         return ResponseEntity.ok().build();
+
+    }
+
+
+    @GetMapping(value = "/view/planner/my_planner")
+    public PlannerResponseDTO.PlannerResponseFullDTO viewMyPlanner(
+            Authentication authentication,
+            @RequestParam int paging,
+            @RequestParam int pageNum
+    ){
+        List<PlannerDTO> plannerDTOList = crudPlannerService.findMyPlannerByEmail(authentication.getName(), paging-1, pageNum-1);
+
+        List<PlannerResponseDTO.PlannerResponse> plannerResponseList = new ArrayList<>();
+
+        for (int i = 0; i < plannerDTOList.size(); i++) {
+            plannerResponseList.add(plannerMapper.plannerDTOToResponse(plannerDTOList.get(i)));
+        }
+
+        PlannerResponseDTO.PlannerResponseFullDTO plannerResponseFullDTO = new PlannerResponseDTO.PlannerResponseFullDTO();
+
+        plannerResponseFullDTO.setPlannerResponseDTOList(plannerResponseList);
+
+        return plannerResponseFullDTO;
 
     }
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +23,9 @@ public class PlannerResponseDTO {
 
         private String title;
 
-        private Date firstDate;
+        private LocalDate firstDate;
 
-        private Date lastDate;
+        private LocalDate lastDate;
 
         private String comment;
 
@@ -35,7 +36,7 @@ public class PlannerResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class PlannerResponseFullDTO {
-        List<PlannerResponseDTO> plannerResponseDTOList = new ArrayList<>();
+        List<PlannerResponseDTO.PlannerResponse> plannerResponseDTOList = new ArrayList<>();
 
         int count = 0;
 

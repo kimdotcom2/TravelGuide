@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class ScheduleDTO {
 
     private Long mapY;
 
-    private Date date;
+    private LocalDate date;
 
     private LocalDateTime arriveTime;
 

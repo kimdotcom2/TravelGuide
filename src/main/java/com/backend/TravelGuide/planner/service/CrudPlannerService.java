@@ -15,4 +15,6 @@ public interface CrudPlannerService {
 
     void deletePlanner(String email, Long plannerId);
 
+    void updatePlannerFull(String email, PlannerDTO plannerDTO);
+
 }

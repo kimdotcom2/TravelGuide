@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class PlannerDTO {
 
     private String title;
 
-    private Date firstDate;
+    private LocalDate firstDate;
 
-    private Date lastDate;
+    private LocalDate lastDate;
 
     private String comment;
 
