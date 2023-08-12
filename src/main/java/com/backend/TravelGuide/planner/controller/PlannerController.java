@@ -72,5 +72,27 @@ public class PlannerController {
 
     }
 
+    @GetMapping(value = "/view/planner/all_planner")
+    public PlannerResponseDTO.PlannerResponseFullDTO viewAllPlanner(
+            Authentication authentication,
+            @RequestParam int paging,
+            @RequestParam int pageNum
+    ){
+        List<PlannerDTO> plannerDTOList = crudPlannerService.findAllPlanner(authentication.getName(), paging-1, pageNum-1);
+
+        List<PlannerResponseDTO.PlannerResponse> plannerResponseList = new ArrayList<>();
+
+        for (int i = 0; i < plannerDTOList.size(); i++) {
+            plannerResponseList.add(plannerMapper.plannerDTOToResponse(plannerDTOList.get(i)));
+        }
+
+        PlannerResponseDTO.PlannerResponseFullDTO plannerResponseFullDTO = new PlannerResponseDTO.PlannerResponseFullDTO();
+
+        plannerResponseFullDTO.setPlannerResponseDTOList(plannerResponseList);
+
+        return plannerResponseFullDTO;
+
+    }
+
 
 }

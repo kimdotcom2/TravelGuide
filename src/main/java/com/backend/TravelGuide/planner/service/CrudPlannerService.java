@@ -11,7 +11,7 @@ public interface CrudPlannerService {
 
     List<PlannerDTO> findMyPlannerByEmail(String email, int paging, int pageNum);
 
-    List<PlannerDTO> findAllPlanner(int paging, int pageNum);
+    List<PlannerDTO> findAllPlanner(String email, int paging, int pageNum);
 
     void deletePlanner(String email, Long plannerId);
 

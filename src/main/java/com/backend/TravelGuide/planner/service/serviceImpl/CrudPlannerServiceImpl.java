@@ -71,6 +71,15 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
     @Override
     public List<PlannerDTO> findMyPlannerByEmail(String email, int paging, int pageNum) {
 
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        if (!member.isPresent()) {
+
+            log.info("No such user!");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+
         Pageable pageable = PageRequest.of(pageNum, paging);
 
         Page<Planner> plannerList = plannerRepository.findByEmail(email, pageable);
@@ -101,7 +110,27 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
     @Transactional
     @Override
-    public List<PlannerDTO> findAllPlanner(int paging, int pageNum) {
+    public List<PlannerDTO> findAllPlanner(String email, int paging, int pageNum) {
+
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        boolean isAdmin = false;
+
+        log.info("check if admin!");
+
+        if (member.isPresent() && member.get().getRole().equals(Role.ADMIN)) {
+            log.info(member.get().getEmail().toString() + " with " + member.get().getRole().toString() + " is admin!");
+            isAdmin = true;
+        }
+        else if (!member.isPresent()) {
+
+            log.info("No such user!");
+
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
+        else {
+            throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
+        }
 
         Pageable pageable = PageRequest.of(pageNum, paging);
 
@@ -214,7 +243,7 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
             log.info("<< update id : " + planner.get().getPlannerId() + " planner by Admin>>");
         }
-        else if (planner.isPresent() && !planner.get().getEmail().equals(email)) {
+        else if (planner.isPresent() && !planner.get().getEmail().equals(email) && isAdmin == false) {
             log.info("Invalid delete request");
 
             throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
