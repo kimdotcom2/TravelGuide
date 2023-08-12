@@ -1,5 +1,6 @@
 package com.backend.TravelGuide.planner.domain;
 
+import com.backend.TravelGuide.planner.DTO.PlannerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,9 +45,15 @@ public class Planner extends BaseEntity{
     @Version
     private Long version;
 
-    @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY)
+    /*@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "planner_id")
-    private List<Schedule> scheduleList = new ArrayList<>();
+    private List<Schedule> scheduleList = new ArrayList<>();*/
+    public void updateInfo(PlannerDTO plannerDTO) {
+        this.title = plannerDTO.getTitle();
+        this.firstDate = plannerDTO.getFirstDate();
+        this.lastDate = plannerDTO.getLastDate();
+        this.comment = plannerDTO.getComment();
+    }
 
 
 }

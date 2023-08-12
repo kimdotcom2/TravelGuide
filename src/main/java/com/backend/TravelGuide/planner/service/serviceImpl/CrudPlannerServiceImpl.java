@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -182,21 +183,21 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
         //log.info(planner.get().getPlannerId() + " is planner id");
 
-        if (planner.isPresent() && planner.get().getEmail().equals(email)) {
+        if (planner.isPresent() && planner.get().getEmail().equals(email) && isAdmin == false) {
 
-            //scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
             plannerRepository.deleteByPlannerId(planner.get().getPlannerId());
 
             log.info("<< delete id : " + planner.get().getPlannerId() + " planner >>");
 
         }
         else if (planner.isPresent() && isAdmin == true && !planner.get().getEmail().equals(email)) {
-            //scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
+            scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
             plannerRepository.deleteByPlannerId(planner.get().getPlannerId());
 
             log.info("<< delete id : " + planner.get().getPlannerId() + " planner by Admin>>");
         }
-        else if (planner.isPresent() && !planner.get().getEmail().equals(email)) {
+        else if (planner.isPresent() && !planner.get().getEmail().equals(email) && isAdmin == false) {
             log.info("Invalid delete request");
 
             throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
@@ -229,17 +230,38 @@ public class CrudPlannerServiceImpl implements CrudPlannerService {
 
         Optional<Planner> planner = plannerRepository.findByPlannerId(plannerDTO.getPlannerId());
 
-        if (planner.isPresent() && planner.get().getEmail().equals(email)) {
+        if (planner.isPresent() && planner.get().getEmail().equals(email) && isAdmin == false) {
+
+            log.info("Planner is exist.");
 
             scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
-            insertPlannerFull(plannerDTO);
+
+            planner.get().updateInfo(plannerDTO);
+
+            plannerDTO.getSchedule().stream().forEach(s -> {
+                        ScheduleDTO scheduleDTO = scheduleMapper.requestToScheduleDTO(s);
+                        scheduleDTO.setPlannerId(planner.get().getPlannerId());
+                        scheduleRepository.save(scheduleMapper.scheduleDTOToEntity(scheduleDTO));
+                    }
+            );
 
             log.info("<< update id : " + planner.get().getPlannerId() + " planner >>");
 
         }
         else if (planner.isPresent() && isAdmin == true && !planner.get().getEmail().equals(email)) {
+
+            log.info("Planner is exist.");
+
             scheduleRepository.deleteByPlannerId(planner.get().getPlannerId());
-            insertPlannerFull(plannerDTO);
+
+            planner.get().updateInfo(plannerDTO);
+
+            plannerDTO.getSchedule().stream().forEach(s -> {
+                        ScheduleDTO scheduleDTO = scheduleMapper.requestToScheduleDTO(s);
+                        scheduleDTO.setPlannerId(planner.get().getPlannerId());
+                        scheduleRepository.save(scheduleMapper.scheduleDTOToEntity(scheduleDTO));
+                    }
+            );
 
             log.info("<< update id : " + planner.get().getPlannerId() + " planner by Admin>>");
         }

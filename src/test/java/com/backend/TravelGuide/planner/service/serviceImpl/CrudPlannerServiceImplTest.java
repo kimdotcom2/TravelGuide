@@ -207,4 +207,13 @@ class CrudPlannerServiceImplTest {
 
         crudPlannerService.updatePlannerFull("드먀", plannerDTO);
     }
+
+    @Test
+    @Transactional
+    @DisplayName("delete planner test")
+    void deletePlanner() {
+
+        crudPlannerService.deletePlanner(email, 8L);
+
+    }
 }

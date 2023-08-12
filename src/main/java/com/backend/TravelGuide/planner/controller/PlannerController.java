@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,7 +51,7 @@ public class PlannerController {
     }
 
 
-    @GetMapping(value = "/view/planner/my_planner")
+    @GetMapping(value = "/planner/view/my_planner")
     public PlannerResponseDTO.PlannerResponseFullDTO viewMyPlanner(
             Authentication authentication,
             @RequestParam int paging,
@@ -72,7 +73,7 @@ public class PlannerController {
 
     }
 
-    @GetMapping(value = "/view/planner/all_planner")
+    @GetMapping(value = "/planner/view/all_planner")
     public PlannerResponseDTO.PlannerResponseFullDTO viewAllPlanner(
             Authentication authentication,
             @RequestParam int paging,
@@ -92,6 +93,42 @@ public class PlannerController {
 
         return plannerResponseFullDTO;
 
+    }
+
+
+    @PutMapping("/planner/edit")
+    public ResponseEntity editPlanner(
+            @RequestBody PlannerRequestDTO.PlannerUpdateRequestDTO plannerRequestDTO,
+            Authentication authentication
+    ) {
+
+        String email = authentication.getName();
+        log.info("email : " + email);
+
+        PlannerDTO plannerDTO = plannerMapper.updateRequestToPlannerDTO(plannerRequestDTO);
+        log.info(plannerDTO.toString() + " is new planner");
+
+        plannerDTO.setEmail(email);
+
+        crudPlannerService.updatePlannerFull(email, plannerDTO);
+
+        return ResponseEntity.ok().build();
+
+    }
+
+
+    @DeleteMapping("/planner/delete")
+    public ResponseEntity deletePlanner(
+            Authentication authentication,
+            @RequestParam Long plannerId
+    ) {
+        String email = authentication.getName();
+
+        log.info("email : " + email + ", planner id : " + plannerId);
+
+        crudPlannerService.deletePlanner(email, plannerId);
+
+        return ResponseEntity.ok().build();
     }
 
 
