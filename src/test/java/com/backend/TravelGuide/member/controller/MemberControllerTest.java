@@ -54,6 +54,7 @@ class MemberControllerTest {
                 .builder()
                 .email("user@email.com")
                 .name("user")
+                .nickname("test")
                 .password("11111111")
                 .answers(Arrays.asList("answer1", "answer2", "answer3"))
                 .build();
