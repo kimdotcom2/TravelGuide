@@ -91,7 +91,7 @@ Content-Type: application/json
 }
 
 
-## 내 플래너 조회
+### 내 플래너 조회
 GET http://localhost:8080/planner/view/my_planner
 
 {
