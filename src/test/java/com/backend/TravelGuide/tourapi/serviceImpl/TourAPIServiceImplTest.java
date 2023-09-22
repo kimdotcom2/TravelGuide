@@ -2,13 +2,11 @@ package com.backend.TravelGuide.tourapi.serviceImpl;
 
 import com.backend.TravelGuide.tourapi.DTO.TourAPIDTO;
 import com.backend.TravelGuide.tourapi.service.TourAPIService;
-import org.junit.jupiter.api.BeforeAll;
+import com.backend.TravelGuide.tourapi.service.serviceImpl.TourAPIServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TourAPIServiceImplTest {
 

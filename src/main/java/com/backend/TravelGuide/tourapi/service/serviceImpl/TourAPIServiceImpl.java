@@ -1,4 +1,4 @@
-package com.backend.TravelGuide.tourapi.serviceImpl;
+package com.backend.TravelGuide.tourapi.service.serviceImpl;
 
 import com.backend.TravelGuide.tourapi.DTO.TourAPIDTO;
 import com.backend.TravelGuide.tourapi.service.TourAPIService;
