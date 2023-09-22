@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RestControllerAdvice
-public class CustomExceptionHandler {
+public class MemberExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
@@ -54,6 +54,8 @@ public class CustomExceptionHandler {
                 .statusCode(e.getStatusCode())
                 .messages(Arrays.asList(e.getMessage()))
                 .build();
+
+        log.info(errorResponse.toString());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.resolve(e.getStatusCode()));
     }

@@ -1,8 +1,6 @@
 package com.backend.TravelGuide.planner.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -33,22 +31,6 @@ public class PlannerRequestDTO {
 
     }
 
-    /*@Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PlannerDeleteRequestDTO {
-        @NotBlank
-        private String title;
-
-        @NotBlank
-        private Date firstDate;
-
-        @NotBlank
-        private Date lastDate;
-
-        private String comment;
-    }*/
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -69,5 +51,17 @@ public class PlannerRequestDTO {
 
     }
 
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PlannerSearchDTO {
+        private final int size = 10;
+        private int page = 1;
 
+        private String type;    // 제목, 작성자
+        private String keyword;
+    }
 }

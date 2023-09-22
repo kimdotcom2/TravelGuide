@@ -1,5 +1,6 @@
 package com.backend.TravelGuide.planner.domain;
 
+import com.backend.TravelGuide.member.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,11 +8,9 @@ import lombok.RequiredArgsConstructor;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "schedule")
@@ -19,7 +18,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Data
-public class Schedule {
+public class Schedule extends BaseEntity {
 
     @Column(name = "schedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

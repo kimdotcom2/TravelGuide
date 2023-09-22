@@ -9,12 +9,14 @@ public interface CrudPlannerService {
 
     void insertPlannerFull(PlannerDTO plannerDTO);
 
-    List<PlannerDTO> findMyPlannerByEmail(String email, int paging, int pageNum);
+    List<PlannerDTO> findMyPlannerByEmail(String email, int page, int size);
 
-    List<PlannerDTO> findAllPlanner(String email, int paging, int pageNum);
+    List<PlannerDTO> findAllPlanner(String email, PlannerRequestDTO.PlannerSearchDTO searchDTO);
 
     void deletePlanner(String email, Long plannerId);
 
     void updatePlannerFull(String email, PlannerDTO plannerDTO);
 
+    // TODO 플래너 검색
+//    List<PlannerDTO> searchPlanner(PlannerSearchDTO plannerSearchDTO);
 }

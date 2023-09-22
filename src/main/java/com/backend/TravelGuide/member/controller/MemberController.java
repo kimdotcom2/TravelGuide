@@ -3,6 +3,7 @@ package com.backend.TravelGuide.member.controller;
 import com.backend.TravelGuide.member.domain.MemberRequestDTO;
 import com.backend.TravelGuide.member.domain.MemberResponseDTO;
 import com.backend.TravelGuide.member.service.MemberService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@Tag(name = "회원 컨트롤러")
 @Slf4j
 @RestController
 @RequestMapping("/member")
